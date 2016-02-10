@@ -15,7 +15,7 @@ endpoint = http://127.0.0.1:80
 
 [database]
 #uri = sqlite:///haas.db
-uri = postgresql://haas:haaspass@127.0.0.1/haas
+uri = postgresql://{{ haas_user }}:{{ haas_pass }}@127.0.0.1/{{ haas_user }}
 
 [devel]
 dry_run=True

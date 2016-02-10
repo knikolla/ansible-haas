@@ -1,0 +1,8 @@
+---
+- name: copy systemd script
+  template:
+    src=haas_network.service.j2
+    dest=/usr/lib/systemd/system/haas_network.service
+
+- name: start haas_network
+  service: name=haas_network state=restarted

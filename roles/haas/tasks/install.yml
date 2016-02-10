@@ -4,24 +4,26 @@
 
 - name: create haas user
   user:
-    name=haas
+    name={{ haas_user }}
     comment="HaaS user"
     home=/var/lib/haas
 
 - name: git clone HaaS
-  become_user: haas
+  become_user: "{{ haas_user }}"
   git: repo=https://github.com/CCI-MOC/haas.git
        dest=/var/lib/haas/haas
+  register: clone
 
 - name: install haas
   shell: "cd /var/lib/haas/haas; python setup.py install"
+  when: clone.changed
 
 - name: copy haas.cfg to /etc/haas.cfg
-  copy:
-    src=haas.cfg
+  template:
+    src=haas.cfg.j2
     dest=/etc/haas.cfg
-    owner=haas
-    group=haas
+    owner={{ haas_user }}
+    group={{ haas_user }}
     mode=0400
 
 - name: link /etc/haas.cfg to /var/lib/haas/haas.cfg
@@ -29,5 +31,5 @@
     src=/etc/haas.cfg
     dest=/var/lib/haas/haas.cfg
     state=link
-    owner=haas
-    group=haas
+    owner={{ haas_user }}
+    group={{ haas_user }}

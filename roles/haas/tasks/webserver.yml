@@ -6,8 +6,8 @@
   yum: name=mod_wsgi state=present
 
 - name: copy wsgi.conf to /etc/httpd/conf.d/
-  copy:
-    src=wsgi.conf
+  template:
+    src=wsgi.conf.j2
     dest=/etc/httpd/conf.d/wsgi.conf
 
 - name: create /var/www/haas

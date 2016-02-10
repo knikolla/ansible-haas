@@ -2,35 +2,16 @@
 - name: install epel-release
   yum: name=epel-release state=present
 
-- name: install libvirt
-  yum: name=libvirt state=present
-
-- name: install bridge-utils
-  yum: name=bridge-utils state=present
-
-- name: install ipmitool
-  yum: name=ipmitool state=present
-
-- name: install telnet
-  yum: name=telnet state=present
-
-- name: install python-pip
-  yum: name=python-pip state=present
-
-- name: install python-devel
-  yum: name=python-devel state=present
-
-- name: install qemu-kvm
-  yum: name=qemu-kvm state=present
-
-#- name: install python-virtinst
-#  yum: name=python-virtinst state=present
-
-- name: install virt-install
-  yum: name=virt-install state=present
-
-- name: install gcc
-  yum: name=gcc state=present
-
-- name: install git
-  yum: name=git state=present
+- name: install dependencies
+  yum: name={{ item }} state=present
+  with_items:
+   - libvirt
+   - bridge-utils
+   - ipmitool
+   - telnet
+   - python-pip
+   - python-devel
+   - qemu-kvm
+   - virt-install
+   - gcc
+   - git

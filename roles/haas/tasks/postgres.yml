@@ -1,18 +1,12 @@
-- name: install python-psycopg2
-  yum: name=python-psycopg2 state=present
-
-#- name: install libq-dev
-#  yum: name=libq-dev state=present
-
-- name: install postgresql-server
-  yum: name=postgresql-server state=present
+---
+- name: install postgres
+  yum: name={{ item }} state=present
+  with_items:
+   - python-psycopg2
+   - postgresql-server
+   - postgresql-contrib
+   - postgresql
   register: postgres
-
-- name: install postgresql-contrib
-  yum: name=postgresql-contrib state=present
-
-- name: install postgresql
-  yum: name=postgresql state=present
 
 - name: init db
   command: postgresql-setup initdb
@@ -29,17 +23,16 @@
     state=restarted
     enabled=yes
 
-- name: create db 'haas'
+- name: create db for haas
   sudo: yes
   sudo_user: postgres
-  postgresql_db: name=haas
+  postgresql_db: name={{ haas_user }}
 
-- name: create db user 'haas'
+- name: create db user for haas
   sudo: yes
   sudo_user: postgres
   postgresql_user:
-    db=haas
-    name=haas
-    password=haaspass
+    db={{ haas_user }}
+    name={{ haas_user }}
+    password={{ haas_pass }}
     priv=CONNECT/ALL
-
