@@ -31,3 +31,22 @@
     name=libvirtd
     state=restarted
     enabled=yes
+
+- name: setup /var/lib/libvirt/images
+  file:
+    path=/var/lib/libvirt/images
+    state=directory
+    owner={{ haas_user }}
+    group=libvirt
+
+- name: define libvirt pool
+  virt_pool:
+    command=define
+    name=haas_headnodes
+    xml='{{ lookup("file", "pool.xml") }}'
+
+- name: attach and autostart libvirt pool
+  virt_pool:
+    name=haas_headnodes
+    state=active
+    autostart=yes
