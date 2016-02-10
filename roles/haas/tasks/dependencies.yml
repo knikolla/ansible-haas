@@ -16,3 +16,4 @@
    - virt-install
    - gcc
    - git
+   - wget

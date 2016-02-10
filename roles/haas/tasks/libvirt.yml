@@ -50,3 +50,10 @@
     name=haas_headnodes
     state=active
     autostart=yes
+
+- name: copy base.xml
+  copy:
+    src=base.xml
+    dest=/var/lib/haas/
+    owner={{ haas_user }}
+    group=libvirt
