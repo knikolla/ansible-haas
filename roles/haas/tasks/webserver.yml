@@ -1,0 +1,25 @@
+---
+- name: install httpd
+  yum: name=httpd state=present
+
+- name: install mod_wsgi
+  yum: name=mod_wsgi state=present
+
+- name: copy wsgi.conf to /etc/httpd/conf.d/
+  copy:
+    src=wsgi.conf
+    dest=/etc/httpd/conf.d/wsgi.conf
+
+- name: create /var/www/haas
+  file:
+    path=/var/www/haas/
+    state=directory
+
+- name: copy haas.wsgi
+  command: cp /var/lib/haas/haas/haas.wsgi /var/www/haas/haas.wsgi
+
+- name: restart httpd
+  service:
+    name=httpd
+    state=restarted
+    enabled=yes

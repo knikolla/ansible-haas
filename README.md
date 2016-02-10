@@ -1,1 +1,2 @@
-# haas-ansible
+# HaaS-Ansible
+Ansible playbook for HaaS.

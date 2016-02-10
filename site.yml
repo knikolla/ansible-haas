@@ -1,0 +1,8 @@
+---
+- hosts: haas
+  user: centos
+  become: yes
+  become_method: sudo
+
+  roles:
+    - haas

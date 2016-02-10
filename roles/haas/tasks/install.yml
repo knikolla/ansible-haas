@@ -1,0 +1,33 @@
+---
+- name: disable selinux
+  selinux: state=disabled
+
+- name: create haas user
+  user:
+    name=haas
+    comment="HaaS user"
+    home=/var/lib/haas
+
+- name: git clone HaaS
+  become_user: haas
+  git: repo=https://github.com/CCI-MOC/haas.git
+       dest=/var/lib/haas/haas
+
+- name: install haas
+  shell: "cd /var/lib/haas/haas; python setup.py install"
+
+- name: copy haas.cfg to /etc/haas.cfg
+  copy:
+    src=haas.cfg
+    dest=/etc/haas.cfg
+    owner=haas
+    group=haas
+    mode=0400
+
+- name: link /etc/haas.cfg to /var/lib/haas/haas.cfg
+  file:
+    src=/etc/haas.cfg
+    dest=/var/lib/haas/haas.cfg
+    state=link
+    owner=haas
+    group=haas

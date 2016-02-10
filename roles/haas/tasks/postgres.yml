@@ -1,0 +1,45 @@
+- name: install python-psycopg2
+  yum: name=python-psycopg2 state=present
+
+#- name: install libq-dev
+#  yum: name=libq-dev state=present
+
+- name: install postgresql-server
+  yum: name=postgresql-server state=present
+  register: postgres
+
+- name: install postgresql-contrib
+  yum: name=postgresql-contrib state=present
+
+- name: install postgresql
+  yum: name=postgresql state=present
+
+- name: init db
+  command: postgresql-setup initdb
+  when: postgres.changed
+
+- name: copy pg_hba.conf
+  copy:
+    src=pg_hba.conf
+    dest=/var/lib/pgsql/data/pg_hba.conf
+
+- name: restart postgresql
+  service:
+    name=postgresql
+    state=restarted
+    enabled=yes
+
+- name: create db 'haas'
+  sudo: yes
+  sudo_user: postgres
+  postgresql_db: name=haas
+
+- name: create db user 'haas'
+  sudo: yes
+  sudo_user: postgres
+  postgresql_user:
+    db=haas
+    name=haas
+    password=haaspass
+    priv=CONNECT/ALL
+
