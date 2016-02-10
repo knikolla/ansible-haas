@@ -1,0 +1,33 @@
+---
+- name: uncomment unix_sock_group in /etc/libvirt/libvirtd.conf
+  replace:
+    dest=/etc/libvirt/libvirtd.conf
+    regexp='(\s+)#unix_sock_group = \"libvirt\"(\s+.*)?$'
+    replace='\1unix_sock_group = "libvirt"\2'
+
+- name: uncomment auth_unix_ro = none in /etc/libvirt/libvirtd.conf
+  replace:
+    dest=/etc/libvirt/libvirtd.conf
+    regexp='(\s+)#auth_unix_ro = \"none\"(\s+.*)?$'
+    replace='\1auth_unix_ro = "none"\2'
+
+- name: uncomment auth_unix_rw = none in /etc/libvirt/libvirtd.conf
+  replace:
+    dest=/etc/libvirt/libvirtd.conf
+    regexp='(\s+)#auth_unix_rw = \"none\"(\s+.*)?$'
+    replace='\1auth_unix_rw = "none"\2'
+
+- name: create libvirt group
+  group: name=libvirt state=present
+
+- name: add haas user to libvirt
+  user:
+    name={{ haas_user }}
+    groups=libvirt
+    append=yes
+
+- name: enable and restart libvirtd
+  service:
+    name=libvirtd
+    state=restarted
+    enabled=yes
