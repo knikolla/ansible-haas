@@ -9,15 +9,21 @@ $ sudo pip install ansible
 ```
 
 Edit `/etc/ansible/hosts' to have a `[haas]` group and below it, the IP or domain of the target host.
-
 ```
 [haas]
 IP or DOMAIN
 ```
-Finally get the repo and edit the `site.yml` file to the user with admin permissions.
 
+Finally, get the repo and edit the `site.yml` file to an user with admin permissions.
+
+To change the actual haas user or haas user database password, edit `group_vars/all`.
 ```
 $ git clone https://github.com/knikolla/ansible-haas.git
 $ cd ansible-haas
-$ ansible-playbook site.yml -v #add --ask-pass if not key authentication
+$ ansible-playbook site.yml -v
+```
+
+If not using key authentication use `--ask-pass`
+```
+ansible-playbook site.yml -v --ask-pass
 ```
