@@ -24,13 +24,13 @@
     enabled=yes
 
 - name: create db for haas
-  sudo: yes
-  sudo_user: postgres
+  become: yes
+  become_user: postgres
   postgresql_db: name={{ haas_user }}
 
 - name: create db user for haas
-  sudo: yes
-  sudo_user: postgres
+  become: yes
+  become_user: postgres
   postgresql_user:
     db={{ haas_user }}
     name={{ haas_user }}
