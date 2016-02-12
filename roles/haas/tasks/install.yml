@@ -1,7 +1,4 @@
 ---
-- name: disable selinux
-  selinux: state=disabled
-
 - name: create haas user
   user:
     name={{ haas_user }}

@@ -1,8 +1,14 @@
 ---
-- name: copy systemd script
+# IF CentOS / RHEL
+- name: copy systemd script CentOS/RHEL
   template:
     src=haas_network.service.j2
     dest=/usr/lib/systemd/system/haas_network.service
+  when: ansible_os_family == 'RedHat'
 
 - name: start haas_network
   service: name=haas_network state=restarted
+  when: ansible_os_family == 'RedHat'
+# END IF
+
+# Ubuntu 14.04 doesn't use Ssystemd

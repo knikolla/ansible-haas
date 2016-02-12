@@ -1,15 +1,26 @@
 ---
-- name: install epel-release
-  yum: name=epel-release state=present
-  when: ansible_distribution == "CentOS" or ansible_distribution == 'RedHat'
+# IF CentOS / RHEL
+  # Till now the only difference between CentOS and RHEL is
+  # the way epel-release is installed.
 
-- name: install epel-release
+  # IF CentOS
+- name: install epel-release CentOS
+  yum: name=epel-release state=present
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+  # Out of date CentOS 7 reports its distribution as RedHat
+  # https://github.com/ansible/ansible/issues/10937
+  # https://lists.centos.org/pipermail/centos-announce/2015-April/021010.html
+  # END IF CentOS
+
+  # IF RHEL
+- name: install epel-release RHEL
   yum:
     name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
     state=present
   when: ansible_distribution == 'Red Hat Enterprise Linux'
+  # END IF RHEL
 
-- name: install dependencies
+- name: install dependencies CentOS/RHEL
   yum: name={{ item }} state=present
   with_items:
    - libvirt
@@ -24,3 +35,32 @@
    - gcc
    - git
    - wget
+  when: ansible_os_family == 'RedHat'
+
+- name: disable selinux
+  selinux: state=disabled
+  when: ansible_os_family == 'RedHat'
+# END IF CentOS / RHEL
+
+# IF Ubuntu
+- name: update apt-get cache
+  apt: update_cache=yes
+  when: ansible_distribution == 'Ubuntu'
+
+- name: install dependencies Ubuntu
+  apt: name={{ item }} state=present
+  with_items:
+   - libvirt-bin
+   - bridge-utils
+   - ipmitool
+   - telnet
+   - python-pip
+   - python-lxml
+   - python-dev
+   - qemu-kvm
+   - virtinst
+   - gcc
+   - git
+   - wget
+  when: ansible_distribution == 'Ubuntu'
+# END IF

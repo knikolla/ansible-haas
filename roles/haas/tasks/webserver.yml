@@ -1,14 +1,49 @@
 ---
-- name: install httpd
+# IF CentOS/RHEL
+- name: install httpd CentOS/RHEL
   yum: name=httpd state=present
+  when: ansible_os_family == 'RedHat'
 
 - name: install mod_wsgi
   yum: name=mod_wsgi state=present
+  when: ansible_os_family == 'RedHat'
 
 - name: copy wsgi.conf to /etc/httpd/conf.d/
   template:
     src=wsgi.conf.j2
     dest=/etc/httpd/conf.d/wsgi.conf
+  when: ansible_os_family == 'RedHat'
+
+- name: restart httpd
+  service:
+    name=httpd
+    state=restarted
+    enabled=yes
+  when: ansible_os_family == 'RedHat'
+# END IF
+
+# IF Ubuntu
+- name: install apache Ubuntu
+  apt: name=apache2 state=present
+  when: ansible_distribution == 'Ubuntu'
+
+- name: install mod_wsgi Ubuntu
+  apt: name=libapache2-mod-wsgi state=present
+  when: ansible_distribution == 'Ubuntu'
+
+- name: copy wsgi.conf to /etc/httpd/conf.d/
+  template:
+    src=wsgi.conf.j2
+    dest=/etc/apache2/conf-enabled/wsgi.conf
+  when: ansible_distribution == 'Ubuntu'
+
+- name: restart httpd
+  service:
+    name=apache2
+    state=restarted
+    enabled=yes
+  when: ansible_distribution == 'Ubuntu'
+# END IF
 
 - name: create /var/www/haas
   file:
@@ -17,9 +52,3 @@
 
 - name: copy haas.wsgi
   command: cp /var/lib/haas/haas/haas.wsgi /var/www/haas/haas.wsgi
-
-- name: restart httpd
-  service:
-    name=httpd
-    state=restarted
-    enabled=yes
