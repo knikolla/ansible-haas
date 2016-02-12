@@ -10,7 +10,7 @@ $ sudo pip install ansible
 
 Edit `/etc/ansible/hosts' to have a `[haas]` group and below it, the IP or domain of the target host.
 
-``
+```
 [haas]
 IP or DOMAIN
 ```
