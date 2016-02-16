@@ -1,24 +1,10 @@
 ---
 # IF CentOS / RHEL
-  # Till now the only difference between CentOS and RHEL is
-  # the way epel-release is installed.
-
-  # IF CentOS
-- name: install epel-release CentOS
-  yum: name=epel-release state=present
-  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
-  # Out of date CentOS 7 reports its distribution as RedHat
-  # https://github.com/ansible/ansible/issues/10937
-  # https://lists.centos.org/pipermail/centos-announce/2015-April/021010.html
-  # END IF CentOS
-
-  # IF RHEL
-- name: install epel-release RHEL
+- name: install epel-release CentOS/RHEL
   yum:
     name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
     state=present
-  when: ansible_distribution == 'Red Hat Enterprise Linux'
-  # END IF RHEL
+  when: ansible_os_family == 'RedHat'
 
 - name: install dependencies CentOS/RHEL
   yum: name={{ item }} state=present
