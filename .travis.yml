@@ -12,6 +12,7 @@ install:
 
 script:
   # Try to run command
-  - cd /var/lib/haas
+  - su haas
+  - haas init_db
   - haas list_projects
 
