@@ -6,10 +6,12 @@ before_install:
   - sudo apt-get update -qq
 
 install:
+  # Install Ansible to deploy HaaS
   - pip install ansible
   - ansible-playbook -i hosts site.yml -v
 
 script:
-  - su haas
+  # Try to run command
+  - cd /var/lib/haas
   - haas list_projects
 
