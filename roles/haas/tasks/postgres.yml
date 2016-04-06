@@ -26,14 +26,14 @@
   apt: name={{ item }} state=present
   with_items:
    - python-psycopg2
-   - postgresql
+   - postgresql-9.3
   when: ansible_distribution == 'Ubuntu'
   register: postgres_ubuntu
 
 - name: copy pg_hba.conf Ubuntu
   copy:
     src=pg_hba.conf
-    dest=/etc/postgresql/9.*/main/pg_hba.conf
+    dest=/etc/postgresql/9.3/main/pg_hba.conf
   when: postgres_ubuntu.changed and ansible_distribution == 'Ubuntu'
 # END IF
 
