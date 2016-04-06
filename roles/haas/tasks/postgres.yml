@@ -35,6 +35,14 @@
     src=pg_hba.conf
     dest=/etc/postgresql/9.3/main/pg_hba.conf
   when: postgres_ubuntu.changed and ansible_distribution == 'Ubuntu'
+  register: pg_hba
+
+- name: copy pg_hba.conf Ubuntu fallback
+  copy:
+  copy:
+    src=pg_hba.conf
+    dest=/etc/postgresql/9.*/main/pg_hba.conf
+  when: pg_hba.failed
 # END IF
 
 - name: restart postgresql
