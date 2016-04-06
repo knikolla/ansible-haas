@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/knikolla/ansible-haas.svg?branch=master)](https://travis-ci.org/knikolla/ansible-haas)
+
 # HaaS-Ansible
 
 Ansible playbook for deploying [HaaS](https://github.com/CCI-MOC/haas).
