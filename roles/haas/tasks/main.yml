@@ -1,7 +1,6 @@
 ---
 - include: dependencies.yml
 - include: install.yml
-- include: postgres.yml
 - include: webserver.yml
 - include: service.yml
 - include: libvirt.yml

@@ -16,9 +16,9 @@
 
 - name: copy pg_hba.conf RHEL
   copy:
-    src=pg_hba.conf
+    src=postgresql.pg_hba.conf
     dest=/var/lib/pgsql/data/pg_hba.conf
-  when: postgres_rhel.changed and ansible_os_family == 'RedHat'
+  when: ansible_os_family == 'RedHat'
 # END IF
 
 # IF Ubuntu
@@ -32,7 +32,7 @@
 
 - name: copy pg_hba.conf Ubuntu
   copy:
-    src=pg_hba.conf
+    src=postgresql.pg_hba.conf
     dest=/etc/postgresql/9.3/main/pg_hba.conf
   when: postgres_ubuntu.changed and ansible_distribution == 'Ubuntu'
 # END IF
@@ -42,6 +42,12 @@
     name=postgresql
     state=restarted
     enabled=yes
+
+- name: create haas user
+  user:
+    name={{ haas_user }}
+    comment="HaaS user"
+    home=/var/lib/haas
 
 - name: create db for haas
   become: yes

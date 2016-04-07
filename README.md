@@ -13,7 +13,7 @@ $ sudo pip install ansible
 Edit `/etc/ansible/hosts' to have a `[haas]` group and below it, the IP or domain of the target host.
 ```
 [haas]
-IP or DOMAIN
+<IP or DOMAIN> ansible_user=<ssh_user>
 ```
 
 Finally, get the repo and edit the `site.yml` file to an user with admin permissions.
@@ -29,3 +29,5 @@ If not using key authentication use `--ask-pass`
 ```
 ansible-playbook site.yml -v --ask-pass
 ```
+
+If running sudo required a password also user `--ask-sudo-pass`
