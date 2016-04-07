@@ -3,12 +3,12 @@
 - name: disable selinux
   selinux: state=disabled
   when: ansible_os_family == 'RedHat'
-# END IF CentOS / RHEL
+# END IF
 
 # IF Ubuntu
 - name: update apt-get cache
   apt: update_cache=yes
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_os_family == 'Debian'
 # END IF
 
 - name: install dependencies CentOS/RHEL

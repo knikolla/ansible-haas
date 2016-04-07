@@ -17,3 +17,5 @@ dependencies:
 apache: httpd
 mod_wsgi: mod_wsgi
 site_conf: "/etc/httpd/conf.d/wsgi.conf"
+
+libvirtd: libvirtd

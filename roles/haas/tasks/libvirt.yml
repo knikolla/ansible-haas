@@ -26,23 +26,11 @@
     groups=libvirt
     append=yes
 
-# IF CentOS / RHEL
 - name: enable and restart libvirtd CentOS/RHEL
   service:
-    name=libvirtd
+    name={{ libvirtd }}
     state=restarted
     enabled=yes
-  when: ansible_os_family == 'RedHat'
-# END IF
-
-# IF Ubuntu
-- name: enable and restart libvirt-bin Ubuntu
-  service:
-    name=libvirt-bin
-    state=restarted
-    enabled=yes
-  when: ansible_distribution == 'Ubuntu'
-# END IF
 
 - name: setup /var/lib/libvirt/images
   file:
