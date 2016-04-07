@@ -1,0 +1,19 @@
+---
+dependencies:
+  - https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+  - libvirt
+  - bridge-utils
+  - ipmitool
+  - telnet
+  - python-pip
+  - python-lxml
+  - python-devel
+  - qemu-kvm
+  - virt-install
+  - gcc
+  - git
+  - wget
+
+apache: httpd
+mod_wsgi: mod_wsgi
+site_conf: "/etc/httpd/conf.d/wsgi.conf"

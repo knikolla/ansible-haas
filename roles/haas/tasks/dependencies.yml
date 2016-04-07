@@ -1,28 +1,5 @@
 ---
 # IF CentOS / RHEL
-- name: install epel-release CentOS/RHEL
-  yum:
-    name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-    state=present
-  when: ansible_os_family == 'RedHat'
-
-- name: install dependencies CentOS/RHEL
-  yum: name={{ item }} state=present
-  with_items:
-   - libvirt
-   - bridge-utils
-   - ipmitool
-   - telnet
-   - python-pip
-   - python-lxml
-   - python-devel
-   - qemu-kvm
-   - virt-install
-   - gcc
-   - git
-   - wget
-  when: ansible_os_family == 'RedHat'
-
 - name: disable selinux
   selinux: state=disabled
   when: ansible_os_family == 'RedHat'
@@ -32,21 +9,8 @@
 - name: update apt-get cache
   apt: update_cache=yes
   when: ansible_distribution == 'Ubuntu'
-
-- name: install dependencies Ubuntu
-  apt: name={{ item }} state=present
-  with_items:
-   - libvirt-bin
-   - bridge-utils
-   - ipmitool
-   - telnet
-   - python-pip
-   - python-lxml
-   - python-dev
-   - qemu-kvm
-   - virtinst
-   - gcc
-   - git
-   - wget
-  when: ansible_distribution == 'Ubuntu'
 # END IF
+
+- name: install dependencies CentOS/RHEL
+  package: name={{ item }} state=present
+  with_items: "{{ dependencies }}"

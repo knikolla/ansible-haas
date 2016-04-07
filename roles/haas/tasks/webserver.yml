@@ -1,49 +1,20 @@
 ---
-# IF CentOS/RHEL
-- name: install httpd CentOS/RHEL
-  yum: name=httpd state=present
-  when: ansible_os_family == 'RedHat'
-
-- name: install mod_wsgi
-  yum: name=mod_wsgi state=present
-  when: ansible_os_family == 'RedHat'
+- name: install Apache2, mod_wsgi
+  package: name={{ item }} state=present
+  with_items:
+    - "{{ apache }}"
+    - "{{ mod_wsgi }}"
 
 - name: copy wsgi.conf to /etc/httpd/conf.d/
   template:
-    src=wsgi.conf.j2
-    dest=/etc/httpd/conf.d/wsgi.conf
-  when: ansible_os_family == 'RedHat'
+    src=wsgi.conf.{{ ansible_os_family }}.j2
+    dest={{ site_conf }}
 
 - name: restart httpd
   service:
-    name=httpd
+    name={{ apache }}
     state=restarted
     enabled=yes
-  when: ansible_os_family == 'RedHat'
-# END IF
-
-# IF Ubuntu
-- name: install apache Ubuntu
-  apt: name=apache2 state=present
-  when: ansible_distribution == 'Ubuntu'
-
-- name: install mod_wsgi Ubuntu
-  apt: name=libapache2-mod-wsgi state=present
-  when: ansible_distribution == 'Ubuntu'
-
-- name: copy wsgi.conf to /etc/httpd/conf.d/
-  template:
-    src=000-default.conf.j2
-    dest=/etc/apache2/sites-available/000-default.conf
-  when: ansible_distribution == 'Ubuntu'
-
-- name: restart httpd
-  service:
-    name=apache2
-    state=restarted
-    enabled=yes
-  when: ansible_distribution == 'Ubuntu'
-# END IF
 
 - name: create /var/www/haas
   file:

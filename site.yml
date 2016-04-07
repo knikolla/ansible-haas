@@ -3,6 +3,9 @@
   become: yes
   become_method: sudo
 
+  vars_files:
+    - "vars/{{ ansible_os_family }}.yml"
+
   roles:
     - haas
     - haas-db
