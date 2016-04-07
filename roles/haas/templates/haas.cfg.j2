@@ -17,15 +17,19 @@ libvirt_endpoint = qemu:///system
 endpoint = http://127.0.0.1:80
 
 [database]
-#uri = sqlite:///haas.db
+{% if database == "sqlite" %}
+uri = sqlite:///haas.db
+{% endif %}
+{% if database == "postgresql" %}
 uri = postgresql://{{ haas_user }}:{{ haas_pass }}@127.0.0.1/{{ haas_user }}
+{% endif %}
 
 [devel]
 dry_run=True
 
 [extensions]
 haas.ext.switches.mock =
-haas.ext.auth.null =
+haas.ext.auth.{{ auth }} =
 
 haas.ext.network_allocators.null =
 #

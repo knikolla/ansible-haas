@@ -3,3 +3,5 @@ haas_user: haas
 haas_pass: haaspass
 
 database: postgresql
+
+auth: "null"
