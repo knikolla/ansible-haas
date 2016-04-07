@@ -16,5 +16,5 @@ install:
 
 script:
   # Try to run command
-  - sudo chmod 777 /etc/haas.cfg && cd /etc/ && haas init_db && haas list_projects
+  - sudo chmod 777 /etc/haas.cfg && cd /var/lib/haas && haas init_db && haas list_projects
 
