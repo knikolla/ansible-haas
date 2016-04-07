@@ -14,8 +14,18 @@ dependencies:
   - git
   - wget
 
+# Apache
 apache: httpd
 mod_wsgi: mod_wsgi
 site_conf: "/etc/httpd/conf.d/wsgi.conf"
 
+# libvirt
 libvirtd: libvirtd
+
+# PostgreSQL
+postgresql_packages:
+  - python-psycopg2
+  - postgresql-server
+  - postgresql-contrib
+  - postgresql
+pg_hba: "/var/lib/pgsql/data/pg_hba.conf"

@@ -1,41 +1,20 @@
 ---
-# IF CentOS/RHEL
-- name: install postgres CentOS/RHEL
-  yum: name={{ item }} state=present
-  with_items:
-   - python-psycopg2
-   - postgresql-server
-   - postgresql-contrib
-   - postgresql
-  when: ansible_os_family == 'RedHat'
-  register: postgres_rhel
+- name: install postgres
+  package: name={{ item }} state=present
+  with_items: "{{ postgresql_packages }}"
+  register: postgres_install
 
+# IF CentOS/RHEL
+# initdb is needed in RHEL after install, but not Ubuntu
 - name: init db CentOS/RHEL
   command: postgresql-setup initdb
-  when: postgres_rhel.changed and ansible_os_family == 'RedHat'
+  when: postgres_install.changed and ansible_os_family == 'RedHat'
+# END IF
 
 - name: copy pg_hba.conf RHEL
   copy:
     src=postgresql.pg_hba.conf
-    dest=/var/lib/pgsql/data/pg_hba.conf
-  when: ansible_os_family == 'RedHat'
-# END IF
-
-# IF Ubuntu
-- name: install postgres Ubuntu
-  apt: name={{ item }} state=present
-  with_items:
-   - python-psycopg2
-   - postgresql-9.3
-  when: ansible_distribution == 'Ubuntu'
-  register: postgres_ubuntu
-
-- name: copy pg_hba.conf Ubuntu
-  copy:
-    src=postgresql.pg_hba.conf
-    dest=/etc/postgresql/9.3/main/pg_hba.conf
-  when: postgres_ubuntu.changed and ansible_distribution == 'Ubuntu'
-# END IF
+    dest={{ pg_hba }}
 
 - name: restart postgresql
   service:
