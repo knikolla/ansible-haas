@@ -4,6 +4,7 @@
   become_method: sudo
 
   vars_files:
+    - "vars/common.yml"
     - "vars/{{ ansible_os_family }}.yml"
 
   roles:
