@@ -7,8 +7,8 @@
 
 - name: Copy site configuration for apache
   template:
-    src=wsgi.conf.{{ ansible_os_family }}.j2
-    dest={{ site_conf }}
+    src=wsgi.conf.j2
+    dest={{ site_conf_path }}
 
 - name: restart httpd
   service:

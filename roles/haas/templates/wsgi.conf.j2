@@ -1,5 +1,5 @@
 LoadModule wsgi_module modules/mod_wsgi.so
-WSGISocketPrefix run/wsgi
+WSGISocketPrefix {{ wsgi_socket_prefix }}
 
 <VirtualHost 127.0.0.1:80>
   ServerName 127.0.0.1

@@ -16,7 +16,8 @@ dependencies:
 # Apache
 apache: apache2
 mod_wsgi: libapache2-mod-wsgi
-site_conf: "/etc/apache2/sites-available/000-default.conf"
+site_conf_path: "/etc/apache2/sites-available/000-default.conf"
+wsgi_socket_prefix: "/var/run/wsgi"
 
 # libvirt
 libvirtd: libvirt-bin

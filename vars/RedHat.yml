@@ -17,7 +17,8 @@ dependencies:
 # Apache
 apache: httpd
 mod_wsgi: mod_wsgi
-site_conf: "/etc/httpd/conf.d/wsgi.conf"
+site_conf_path: "/etc/httpd/conf.d/wsgi.conf"
+wsgi_socket_prefix: "run/wsgi"
 
 # libvirt
 libvirtd: libvirtd
