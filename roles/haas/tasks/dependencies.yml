@@ -11,6 +11,6 @@
   when: ansible_os_family == 'Debian'
 # END IF
 
-- name: install dependencies CentOS/RHEL
+- name: Install dependencies
   package: name={{ item }} state=present
   with_items: "{{ dependencies }}"

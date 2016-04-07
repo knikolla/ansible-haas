@@ -5,10 +5,14 @@ python: "2.7"
 sudo: required
 dist: trusty
 
+env:
+  - DB=postgresql
+  - DB=sqlite
+
 install:
   # Install Ansible to deploy HaaS
   - pip install ansible
-  - ansible-playbook -i hosts site.yml -v
+  - ansible-playbook -i hosts site.yml -v -e database=$DB
 
 script:
   # Try to run command
