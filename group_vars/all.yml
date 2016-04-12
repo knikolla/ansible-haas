@@ -4,4 +4,7 @@ haas_pass: haaspass
 
 database: postgresql
 
+# Valid options for auth:
+# * "null"
+# * "database"
 auth: "null"
