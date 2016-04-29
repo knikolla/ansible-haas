@@ -1,8 +1,7 @@
 ---
-- name: where am I?
-  shell: pwd
-  become_user: "{{ haas_user }}"
+- name: Install sqlite
+  package: name=sqlite state=present
 
 - name: Create sqlite DB
-  shell: sqlite3 haas.db
+  shell: sqlite3 /var/lib/haas/haas.db '.databases'
   become_user: "{{ haas_user }}"
