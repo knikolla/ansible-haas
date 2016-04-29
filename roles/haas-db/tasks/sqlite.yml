@@ -1,2 +1,8 @@
 ---
-# No setup required.
+- name: where am I?
+  shell: pwd
+  become_user: "{{ haas_user }}"
+
+- name: Create sqlite DB
+  shell: sqlite3 haas.db
+  become_user: "{{ haas_user }}"

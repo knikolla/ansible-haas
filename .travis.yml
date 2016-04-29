@@ -6,8 +6,9 @@ sudo: required
 dist: trusty
 
 env:
-  - DB=postgresql
-  - DB=sqlite
+  matrix:
+    - DB=postgresql
+    - DB=sqlite
 
 install:
   # Install Ansible to deploy HaaS
@@ -15,6 +16,4 @@ install:
   - ansible-playbook -i hosts site.yml -v -e database=$DB
 
 script:
-  # Try to run command
-  # sudo is required because of /etc/haas.cfg permissions
-  - cd /var/lib/haas && sudo haas-admin db create && sudo haas list_projects
+  - sudo ./run_tests.sh
