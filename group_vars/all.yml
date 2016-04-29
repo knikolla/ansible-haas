@@ -7,4 +7,4 @@ database: postgresql
 # Valid options for auth:
 # * "null"
 # * "database"
-auth: "null"
+auth: "database"
