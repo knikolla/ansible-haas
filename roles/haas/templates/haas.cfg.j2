@@ -3,7 +3,7 @@
 # but using the vlan_pool allocator may also be desirable (see the  comments
 # below).
 [general]
-log_level = debug
+log_level = info
 
 [auth]
 require_authentication = False
@@ -18,7 +18,7 @@ endpoint = http://127.0.0.1:80
 
 [database]
 {% if database == "sqlite" %}
-uri = sqlite:///haas.db
+uri = sqlite:////var/lib/haas/haas.db
 {% endif %}
 {% if database == "postgresql" %}
 uri = postgresql://{{ haas_user }}:{{ haas_pass }}@127.0.0.1/{{ haas_user }}
