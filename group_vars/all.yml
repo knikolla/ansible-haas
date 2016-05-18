@@ -1,10 +1,21 @@
 ---
-haas_user: haas
-haas_pass: haaspass
+haas_user: "haas"
+haas_pass: "haaspass"
 
-database: postgresql
+# Valid options for database:
+# * "sqlite"
+# * "postgresql"
+database: "postgresql"
 
 # Valid options for auth:
 # * "null"
 # * "database"
 auth: "database"
+
+# Should contain the final folder name and not have a trailing slash.
+source_directory: "/var/lib/haas/haas"
+
+# If clone from git is set to true, ansible will clone the specified
+# git repo into the source destination folder.
+clone_from_git: True
+git_repo: "git://github.com/CCI-MOC/haas.git"

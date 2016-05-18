@@ -5,15 +5,16 @@
     comment="HaaS user"
     home=/var/lib/haas
 
+# IF clone_from_git
 - name: git clone HaaS
   become_user: "{{ haas_user }}"
-  git: repo=https://github.com/CCI-MOC/haas.git
-       dest=/var/lib/haas/haas
-  register: clone
+  git: repo={{ git_repo }}
+       dest={{ source_directory }}
+  when: clone_from_git == True
+# END IF
 
 - name: install haas
-  shell: "cd /var/lib/haas/haas; python setup.py install"
-  when: clone.changed
+  shell: "cd {{ source_directory }}; python setup.py install"
 
 - name: copy haas.cfg to /etc/haas.cfg
   template:
