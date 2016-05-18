@@ -22,4 +22,4 @@
     state=directory
 
 - name: copy haas.wsgi
-  command: cp /var/lib/haas/haas/haas.wsgi /var/www/haas/haas.wsgi
+  shell: "cp {{ source_directory }}/haas.wsgi /var/www/haas/haas.wsgi"
